@@ -1,0 +1,38 @@
+
+import uproot
+import numpy as np
+import matplotlib.pyplot as plt
+
+print("Loading data...")
+f = uproot.open("/Users/ashwani/Downloads/DataR_run7_22Na_polymer_foam_cups.root")
+tree = f["Data_R"]
+ts = tree["Timestamp"].array(library="np").astype(np.int64)
+ch = tree["Channel"].array(library="np")
+
+t0 = ts[ch == 0]
+t1 = ts[ch == 1]
+print(f"ch0: {len(t0)} hits,  ch1: {len(t1)} hits")
+
+idx = np.searchsorted(t1, t0)
+idx = np.clip(idx, 1, len(t1) - 1)
+left  = t1[idx - 1]
+right = t1[idx]
+dt_left  = t0 - left
+dt_right = t0 - right
+dt = np.where(np.abs(dt_left) < np.abs(dt_right), dt_left, dt_right)
+
+# WIDER window so we capture the whole (offset) peak
+WINDOW = 20000  # +/- 20 ns
+mask = np.abs(dt) < WINDOW
+dt_coinc = dt[mask]
+print(f"Coincidences within +/-{WINDOW} ps: {len(dt_coinc)}")
+print(f"Peak (most common) dt is near: {np.median(dt_coinc):.0f} ps")
+
+plt.hist(dt_coinc, bins=400, histtype="step")
+plt.xlabel("Time difference ch0 - ch1 (ps)")
+plt.ylabel("Coincidence counts")
+plt.title("Na-22 coincidence timing spectrum (wide window)")
+plt.tight_layout()
+plt.savefig("/Users/ashwani/na22-analysis/coincidence_dt.png", dpi=150)
+print("Saved coincidence_dt.png")
+plt.show()
