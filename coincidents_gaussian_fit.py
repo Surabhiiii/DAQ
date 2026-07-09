@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
-f = uproot.open("/Users/ashwani/Downloads/DataR_run7_22Na_polymer_foam_cups.root")
+f = uproot.open("<FILEPATH.root>")
 tree = f["Data_R"]
 ts = tree["Timestamp"].array(library="np").astype(np.int64)
 ch = tree["Channel"].array(library="np")
@@ -42,6 +42,6 @@ plt.ylabel("Coincidence counts")
 plt.title("Na-22 coincidence peak with Gaussian fit")
 plt.legend()
 plt.tight_layout()
-plt.savefig("/Users/ashwani/na22-analysis/coinc_fit.png", dpi=150)
+plt.savefig("<DESTINATION.png>", dpi=150)
 print("Saved coinc_fit.png")
 plt.show()
