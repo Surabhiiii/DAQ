@@ -2,7 +2,7 @@
 import uproot
 import numpy as np
 
-f = uproot.open("/Users/ashwani/Downloads/DataR_run7_22Na_polymer_foam_cups.root")
+f = uproot.open("/FILEPATH.root")
 tree = f["Data_R"]
 ts = tree["Timestamp"].array(library="np").astype(np.int64)
 ch = tree["Channel"].array(library="np")
