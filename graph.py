@@ -5,7 +5,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 print("Opening file...")
-f = uproot.open("/Users/ashwani/Downloads/DataR_run7_22Na_polymer_foam_cups.root")
+f = uproot.open("<FILEPATH.root>")
 tree = f["Data_R"]
 
 print("Reading branches...")
@@ -23,5 +23,5 @@ plt.yscale("log")
 plt.legend()
 plt.title("Na-22 spectrum by detector channel")
 plt.tight_layout()
-plt.savefig("/Users/ashwani/na22-analysis/na22_by_channel.png", dpi=150)
+plt.savefig("<SOURCE.png>", dpi=150)
 print("Saved plot to na22_by_channel.png")
