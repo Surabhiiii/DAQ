@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 print("Loading data...")
-f = uproot.open("/Users/ashwani/Downloads/DataR_run7_22Na_polymer_foam_cups.root")
+f = uproot.open("<FILEPATH.root>")
 tree = f["Data_R"]
 ts = tree["Timestamp"].array(library="np").astype(np.int64)
 ch = tree["Channel"].array(library="np")
@@ -33,6 +33,6 @@ plt.xlabel("Time difference ch0 - ch1 (ps)")
 plt.ylabel("Coincidence counts")
 plt.title("Na-22 coincidence timing spectrum (wide window)")
 plt.tight_layout()
-plt.savefig("/Users/ashwani/na22-analysis/coincidence_dt.png", dpi=150)
+plt.savefig("<TARGET LOCATION.png>", dpi=150)
 print("Saved coincidence_dt.png")
 plt.show()
