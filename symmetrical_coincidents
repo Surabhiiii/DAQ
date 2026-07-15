@@ -13,6 +13,7 @@ t0 = ts[ch == 0]
 t1 = ts[ch == 1]
 print(f"ch0: {len(t0)} hits,  ch1: {len(t1)} hits")
 
+#Remove this. Coincidents/events can be in the same channel as long as it is between the certain, specific timeframe. 
 idx = np.searchsorted(t1, t0)
 idx = np.clip(idx, 1, len(t1) - 1)
 left  = t1[idx - 1]
@@ -21,7 +22,7 @@ dt_left  = t0 - left
 dt_right = t0 - right
 dt = np.where(np.abs(dt_left) < np.abs(dt_right), dt_left, dt_right)
 
-# WIDER window so we capture the whole (offset) peak
+# THE WINDOW VARIES DEPENDING ON THE MATERIAL IN THE DETECTORS. 
 WINDOW = 20000  # +/- 20 ns
 mask = np.abs(dt) < WINDOW
 dt_coinc = dt[mask]
